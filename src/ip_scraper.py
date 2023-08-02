@@ -98,6 +98,11 @@ class IpScraper:
                 country = div.find("a", class_="filter-link text-dark").text
                 city = div.find_all("a", class_="filter-link text-dark")[1].text
 
+                # Check if IP already exists in results
+                if any(result["ip"] == ip for result in self.results):
+                    print(f"IP {ip} already exists in results, skipping...")
+                    continue
+
                 # Scraping ports for the given ip
                 base_url = "https://www.shodan.io/host/"
                 r = session.get(base_url + ip)
@@ -156,7 +161,10 @@ class IpScraper:
 
         # Save the results from all threads into a JSON file at the end
         current_datetime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-        result_file_path = os.path.join("scraped-ips", f"scraped-ips-{current_datetime}.json")
+        directory = "scraped-ips"
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        result_file_path = os.path.join(directory, f"scraped-ips-{current_datetime}.json")
         with open(result_file_path, 'w', encoding='utf-8') as f:
             json.dump(self.results, f, ensure_ascii=False, indent=4)
 

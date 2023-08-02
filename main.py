@@ -1,6 +1,7 @@
 import sys
 from src.ip_scraper import IpScraper
 from termcolor import colored
+from src.hikvision_scanner import HikVisionScanner
 
 def main():
     logo = """
@@ -11,11 +12,11 @@ def main():
  \___|_  /|__|__|_ \  \___/   |__/____  >__|\____/|___|  /_______  / ____|\___  >
        \/         \/                  \/               \/        \/\/         \/ 
 
-    ➜  input [1] to start                                ,-""-.
-    ➜  input [2] to quit                                /--.   \  .-.-'`-~
-                                                       | () )   |<_.-.
-                                                        \--'   / `~._ `~'
-                                                         `-..-'      `-  
+    ↱ input [1] to start                                ,-""-.
+    ↳ input [2] to quit                                /--.   \  .-.-'`-~
+                                                      | () )   |<_.-.
+                                                       \--'   / `~._ `~'
+                                                        `-..-'      `-  
 """
     print(colored(logo, "green"))
     choice = input("%~ ")
