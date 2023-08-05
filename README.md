@@ -28,11 +28,11 @@
 6. Follow the instructions displayed in the console.
 
 ## Tool's options:
-1. *[1] to start* - It is the process of obtaining IP addresses, ports, and locations of cameras from the shodan.io website. All data is saved in the scraped-ips folder. Subsequently, there is a filtering of the data and saving of the working cameras in the results/results-DATE.txt folder in the following format:
+1. [1] to start - It is the process of obtaining IP addresses, ports, and locations of cameras from the shodan.io website. All data is saved in the scraped-ips folder. Subsequently, there is a filtering of the data and saving of the working cameras in the results/results-DATE.txt folder in the following format:
 <p align="left">  
 <img src="https://i.imgur.com/uleFyDL.png">
 </p>
-2. *[2] to change passwords* - After selecting this option, a file selection screen with results will be displayed, for example:
+2. [2] to change passwords - After selecting this option, a file selection screen with results will be displayed, for example:
 <p align="left">  
 <img src="https://i.imgur.com/oB8uf87.png">
 </p>
