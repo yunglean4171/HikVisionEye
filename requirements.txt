@@ -1,3 +1,5 @@
+aiohttp==3.8.4
+aiohttp==3.8.5
 beautifulsoup4==4.12.2
 Requests==2.31.0
-termcolor
+termcolor==2.3.0
