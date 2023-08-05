@@ -8,7 +8,7 @@ import json
 import os
 from datetime import datetime
 from .hikvision_scanner import HikVisionScanner
-
+from termcolor import colored
 
 class IpScraper:
     def __init__(self):
@@ -62,10 +62,10 @@ class IpScraper:
 
             r = session.post(self.login_url, data=login_data)
             r.raise_for_status()
-            print("\nAccount switched to:", username)
+            print(colored(f"\nAccount switched to: {username}", "light_cyan"))
             #print("Session cookies:", session.cookies.get_dict())  
         except Exception as e:
-            print(f"Error logging in: {e}")
+            print(colored(f"Error logging in: {e}", "red"))
         return session
 
     def scrape_website(self, query, session, login_required=True):
@@ -78,14 +78,14 @@ class IpScraper:
             r.raise_for_status()
 
             if '<p>Daily search usage limit reached. Please wait a bit before doing more searches or use the API.</p>' in r.text and login_required:
-                print("Daily search limit reached. Waiting and switching accounts...")
+                print(colored("Daily search limit reached. Waiting and switching accounts...", "yellow"))
                 time.sleep(random.randint(5,10))
                 return "limit_reached"
 
             if "Error:" in r.text and not login_required:
                 raise Exception("Daily limit reached for non-login scraping")
 
-            print("Scraping website with query:", query)
+            print(colored(f"Scraping website with query: {query}", "light_green"))
 
             soup = BeautifulSoup(r.text, 'html.parser')
 
@@ -100,7 +100,7 @@ class IpScraper:
 
                 # Check if IP already exists in results
                 if any(result["ip"] == ip for result in self.results):
-                    print(f"IP {ip} already exists in results, skipping...")
+                    print(colored(f"IP {ip} already exists in results, skipping...", "grey"))
                     continue
 
                 # Scraping ports for the given ip
@@ -118,11 +118,11 @@ class IpScraper:
 
         except exceptions.HTTPError as e:
             if e.response.status_code == 429:
-                print("429 Error, sleeping for a while...")
+                print(colored("429 Error, sleeping for a while...", "yellow"))
                 time.sleep(random.randint(4, 6))
                 return "limit_reached"
             else:
-                print(f"Error scraping website: {e}")
+                print(colored(f"Error scraping website: {e}", "light_red"))
 
 
     def no_login_scrape_website(self, query):
@@ -145,13 +145,13 @@ class IpScraper:
             session = self.login_shodan(username, password)
             result = self.run_queries(session)
             if result == "limit_reached":
-                print("Switching to the next account...")
+                print(colored("Switching to the next account...", "light_magenta"))
             else:
-                print("Queries finished successfully for this account, switching to the next one...")
+                print(colored("Queries finished successfully for this account, switching to the next one...", "cyan"))
                 continue
 
-        print("\nNo more accounts in accounts.txt to switch!")
-        print("\nAttempting non-login scraping...")
+        print(colored("\nNo more accounts in accounts.txt to switch!", "light_grey"))
+        print(colored("\nAttempting non-login scraping...", "light_green"))
         
         try:
             for query in self.queries:
@@ -169,4 +169,3 @@ class IpScraper:
             json.dump(self.results, f, ensure_ascii=False, indent=4)
 
         HikVisionScanner.load_ips_and_ports(result_file_path)
-        
