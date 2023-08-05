@@ -25,3 +25,8 @@
 *If you don't do this, the tool will automatically attempt to scrape data without logging in, but this will result in a drastic decrease in accurate hits.*
 5. Run the main script using the command: ``python main.py``
 6. Follow the instructions displayed in the console.
+
+
+
+# Contributing
+If you have some ideas that you want to suggest please make a [pull requests](https://github.com/yunglean4171/HikVisionEye/pulls) and if you found some bugs please make an [issue](https://github.com/yunglean4171/HikVisionEye/issues). Every contribution will be appreciated.
